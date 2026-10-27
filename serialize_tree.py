@@ -38,37 +38,68 @@ def insert(root: Optional[TreeNode], key: int) -> TreeNode:
 
 
 def search(root: Optional[TreeNode], target: int) -> Optional[TreeNode]:
-    """
-    Recursively find and return the TreeNode containing `target`, or
-    None if absent. Must exploit the BST property -- only recurse into
-    the one subtree that could possibly contain `target`.
-    """
-    # TODO
-    raise NotImplementedError
+    """Return the node containing target, or None if absent."""
+    # Base case: empty subtree
+    if root is None:
+        return None
+
+    # Base case: found the target
+    if root.key == target:
+        return root
+
+    # Recurse into only the possible subtree
+    if target < root.key:
+        return search(root.left, target)
+    else:
+        return search(root.right, target)
 
 
 def inorder(root: Optional[TreeNode]) -> List[int]:
-    """Return keys in inorder (left, root, right) order."""
-    # TODO
-    raise NotImplementedError
+    """Return keys in left, root, right order."""
+    if root is None:
+        return []
+
+    return (
+        inorder(root.left)
+        + [root.key]
+        + inorder(root.right)
+    )
 
 
 def preorder(root: Optional[TreeNode]) -> List[int]:
-    """Return keys in preorder (root, left, right) order."""
-    # TODO
-    raise NotImplementedError
+    """Return keys in root, left, right order."""
+    if root is None:
+        return []
+
+    return (
+        [root.key]
+        + preorder(root.left)
+        + preorder(root.right)
+    )
 
 
 def postorder(root: Optional[TreeNode]) -> List[int]:
-    """Return keys in postorder (left, right, root) order."""
-    # TODO
-    raise NotImplementedError
+    """Return keys in left, right, root order."""
+    if root is None:
+        return []
+
+    return (
+        postorder(root.left)
+        + postorder(root.right)
+        + [root.key]
+    )
 
 
 def to_json(root: Optional[TreeNode]) -> Optional[Dict[str, Any]]:
-    """Recursively build {"key": ..., "left": <subtree or null>, "right": <subtree or null>}."""
-    # TODO
-    raise NotImplementedError
+    """Convert the BST into a nested JSON-compatible dictionary."""
+    if root is None:
+        return None
+
+    return {
+        "key": root.key,
+        "left": to_json(root.left),
+        "right": to_json(root.right),
+    }
 
 
 # ============================== VERIFICATION SUITE ==============================
